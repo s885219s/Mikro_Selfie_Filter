@@ -27,37 +27,45 @@
 	</script>
 	<script src="js/lib/brf/BRF_NXT_public_API.js"></script>
 	<script src="js/lib/brf/BRF_NXT_JS_TK200215_v3.0.16_trial.js"></script>
-
-	<!-- 
+	<script src="js/lib/recordRTC/dev/RecordRTC.js"></script>
+	<script src="js/lib/recordRTC/libs/gif-recorder.js"></script>
+	<script src="js/lib/recordRTC/dev/getScreenId.js"></script>
+	<script src="js/lib/recordRTC/libs/screenshot.js"></script>
+	<script src="js/lib/recordRTC/dev/Whammy.js"></script>
+	<script src="js/lib/recordRTC/dev/CanvasRecorder.js"></script>
+	<script src="js/lib/recordRTC/dev/MediaStreamRecorder.js"></script>
+	<script src="js/lib/recordRTC/dev/gumadapter.js"></script>
+	<!--<script src="https://cdn.webrtc-experiment.com/RecordRTC.js"></script>-->
+	<!--
 		BRF examples using CreateJS.
-		
+
 		Choose only one of the files below, otherwise the latest file will
 		override all other initExample functions and will start only the latest
 		loaded example.
 	-->
-	
+
 	<script src="js/examples/ExampleBase.js"></script>
-	
+
 	<!-- webcam examples -->
-	
+
 	<!--<script src="js/examples/ExamplePointTracking.js"></script>-->
 	<!--<script src="js/examples/ExampleFaceDetection.js"></script>-->
 	<!--<script src="js/examples/ExampleFaceTracking.js"></script>-->
 	 <script src="js/examples/ExampleCandideTracking.js"></script>
-	
-	<!-- 
+
+	<!--
 		720p/HD webcam examples. These will also need their base classes.
 		e.g. ExampleFaceTracking1280x720.js will need ExampleFaceTracking.js
 	-->
-	
+
 	<!-- <script src="js/examples/hires/ExamplePointTracking1280x720.js"></script>	--> <!-- needs js/examples/ExamplePointTracking.js -->
 	<!-- <script src="js/examples/hires/ExampleFaceDetection1280x720.js"></script>	--> <!-- needs js/examples/ExampleFaceDetection.js -->
 	 <!--<script src="js/examples/hires/ExampleFaceTracking1280x720.js"></script> 	 <!--needs js/examples/ExampleFaceTracking.js-->
-	 <!--<script src="js/examples/hires/ExampleCandideTracking1280x720.js"></script>  &lt;!&ndash;needs js/examples/ExampleCandideTracking.js &ndash;&gt;-->
+	 <script src="js/examples/hires/ExampleCandideTracking1280x720.js"></script>  <!--needs js/examples/ExampleCandideTracking.js -->
 	 <!--<script src="js/examples/specials/ExampleComponentFlow.js"></script>		  <!--needs js/examples/ExampleFaceTracking.js-->
-	
+
 	<!-- single image examples -->
-	
+
 	<!-- <script src="js/examples/images/ExampleFaceTrackingImage.js"></script> -->
 	<!-- <script src="js/examples/images/ExampleFaceDetectionImage.js"></script> -->
 </head>
@@ -68,22 +76,71 @@
 		This is the canvas for createjs (the stage). You can change the size to any values.
 		You just need to set screenRect to place the video/results at a certain position on that stage.
 	-->
+	<div id="elementToShare">
 	<canvas id="_stage" width="1280" height="720" style="position:absolute;left:0px;top:0px;">Your browser does not seem to support canvas elements.</canvas>
-
+	</div>
 	<!--
 		Chrome on Android v35+ supports getUserMedia! But the video needs to be started on user action.
 		This play button will be shown, if a user action is needed.
 	-->
 	<img src="media/assets/play.png" id="btPlay" style="display:none;position:absolute;top:165px;left:221px;"/>
 
+	<div style="position: fixed;left: 60%;text-align: center;">
+		<button id="start" contenteditable="false">Start Canvas Recording</button>
+		<button id="stop" disabled contenteditable="false">Stop</button>
+		<button id="save-to-disk">Save To Disk</button>
+	</div>
+
+	<script>
+		var elementToShare = document.getElementById('elementToShare');
+		var recorder = RecordRTC(elementToShare, {
+			type: 'canvas',
+			showMousePointer: false,
+			disableLogs: false
+		});
+
+		document.getElementById('start').onclick = function() {
+			document.getElementById('start').disabled = true;
+			recorder.startRecording();
+			setTimeout(function() {
+				document.getElementById('stop').disabled = false;
+			}, 1000);
+		};
+		document.getElementById('stop').onclick = function() {
+			this.disabled = true;
+			recorder.stopRecording();
+//			recorder.stopRecording(function(url) {
+//				var video = document.createElement('video');
+//				video.src = url;
+//				video.setAttribute('style', 'width="1280" height="720" style="position:absolute;left:0px;top:0px;');
+//				document.body.appendChild(video);
+//				video.controls = true;
+//				video.play();
+//				window.open(url);
+//			});
+		};
+		window.onbeforeunload = function() {
+			document.getElementById('start').disabled = false;
+			document.getElementById('stop').disabled = true;
+		};
+		document.getElementById('save-to-disk').onclick = function(){
+			this.disabled = true;
+			recorder.save();
+		};
+		window.onbeforeunload = function() {
+			document.getElementById('start').disabled = false;
+			document.getElementById('stop').disabled = true;
+		};
+		webrtcUtils.enableLogs = false;
+	</script>
 	<!--
 		The Beyond Reality Face Nxt logo.
 		Please be fair and don't hide the logo! Thanks.
 	-->
 	<!--<div id="brfLogo">-->
 		<!--<a href="https://www.beyond-reality-face.com" target="_blank">-->
-			<!--<img src="media/assets/brf_nxt_logo_black.png" style="opacity:0.35;position:absolute;top:8px;left:9px;"/>-->
-			<!--<img src="media/assets/brf_nxt_logo_white.png" style="opacity:0.75;position:absolute;top:7px;left:8px;"/>-->
+			<!--<img src="media/assets/brf_nxt_logo_black.png" style="opacity:0.35;position:absolute;top:75%;left:9px;"/>-->
+			<!--<img src="media/assets/brf_nxt_logo_white.png" style="opacity:0.75;position:absolute;top:75%;left:8px;"/>-->
 		<!--</a>-->
 	<!--</div>-->
 </body>

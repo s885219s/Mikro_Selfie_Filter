@@ -118,8 +118,6 @@ function initExample() {
 		// HTML5 specific vars
 		_this._videoBitmapData = null;
 
-		_this._text = null;
-
 		/**
 		 * You can of course put in your own custom resolution rectangles here.
 		 * Or you just use one of the following presets for a quick start.
@@ -201,24 +199,18 @@ function initExample() {
 			_this._drawSprite = new cjs.Shape();
 			_this._draw = _this._drawSprite.graphics;
 
-			_this._bitmap = new cjs.Bitmap("media/images/pika.png");
-			_this._bitmap.scaleX=0.4;
-			_this._bitmap.scaleY=0.4;
-
 			_this._spriteSheet = new cjs.SpriteSheet({
-				framerate: 30,
-				"images": ["media/images/spritesheet_grant.png"],
-				"frames": {"regX": 82, "height": 292, "count": 64, "regY": 0, "width": 165},
+				framerate: 4,
+				"images": ["media/images/frame.png"],
+				"frames": {"regX": 0, "regY": 0, "width": 210, "height": 595, "count": 4},
 				// define two animations, run (loops, 1.5x speed) and jump (returns to run):
 				"animations": {
-					"run": [0, 25, "run", 1.5],
-					"jump": [26, 63, "run"]
+					"shake": [0, 3, "shake",0.8]
 				}
 			});
-			_this._grant = new cjs.Sprite(_this._spriteSheet, "run");
-			_this._grant.scaleX = 0.5;
-			_this._grant.scaleY = 0.5;
-
+			_this._giphy = new cjs.Sprite(_this._spriteSheet, "shake");
+			_this._giphy.scaleX = 0.2;
+			_this._giphy.scaleY = 0.2;
 
 			_this._videoBitmapData = new cjs.BitmapData(null, _this._screenRect.width, _this._screenRect.height, 0xffffffff);
 			_this._video = new cjs.Bitmap(_this._videoBitmapData.canvas);
@@ -281,29 +273,29 @@ function initExample() {
 		 * Init the webcam.
 		 */
 		_this.initCamera = function() {
+			console.log(_this._cameraResolution.width, _this._cameraResolution.height)
 			_this._camera = lib.Camera.getCamera("0", _this._cameraResolution.width, _this._cameraResolution.height);
-
+			console.log(_this._camera);
 			if(_this._camera != null) {
 				// Firefox currently doesn't support these contraints. 
 				// In about:config search for media to set default_width and default_height
 				// to get higher resolutions. It works in Chrome though.
 				var constraints = {
 					audio: false,
-					video: 
-					{
+					video: {
 						mandatory: {
-							minWidth: _this._cameraResolution.width, 
+							minWidth: _this._cameraResolution.width,
 							minHeight: _this._cameraResolution.height
 						},
 						optional: [
-						    { width: { max: _this._cameraResolution.width }},
-						    { height: { max: _this._cameraResolution.height }},
-						    { facingMode: "user" },
-						    { minFrameRate: 30 }
-						  ]
-						}
+							{width: {max: _this._cameraResolution.width}},
+							{height: {max: _this._cameraResolution.height}},
+							{facingMode: "user"},
+							{minFrameRate: 30}
+						]
+					}
 				};
-				
+
 				var getUserMedia =
 					window.navigator.getUserMedia ||
 					window.navigator.mozGetUserMedia ||
@@ -312,7 +304,7 @@ function initExample() {
 					function(options, success, error) {
 						error();
 					};
-
+				//navigator.mediaDevices.getUserMedia(constraints).then(_this.onCameraAvailable).catch(_this.onCameraUnavailable);
 				getUserMedia.call(window.navigator, constraints, _this.onCameraAvailable, _this.onCameraUnavailable);
 			}
 

@@ -103,9 +103,9 @@ function initExample() {
 				// Last update was face detection only,
 				// draw the face detection roi and lastDetectedFace:
 				lib.DrawingUtils.drawRect(_this._draw, _this._faceDetectionRoi, false, 1.0, "#ffff00", 1.0);//比較裡面的那個筐
+
 				if(add) {
-					_this._container.removeChild(_this._bitmap);
-					_this._container.removeChild(_this._grant);
+					_this._container.removeChild(_this._giphy);
 					add=false;
 				}
 				// And draw the ony result, that got calculated from lastDetectedFaces.
@@ -124,25 +124,19 @@ function initExample() {
 				lib.DrawingUtils.drawTrianglesAsPoints(_this._draw, faceShape.faceShapeVertices);//畫出點
 				lib.DrawingUtils.drawRect(_this._draw, faceShape.bounds);//以方形畫臉的輪廓
 
-				_this._bitmap.x=faceShape.candideShapeVertices[126]-100;
-				_this._bitmap.y=faceShape.candideShapeVertices[127]-60;
-				_this._container.addChild(_this._bitmap);
-
-				_this._grant.x = faceShape.candideShapeVertices[0];
-				_this._grant.y = faceShape.candideShapeVertices[1]-80;
-				_this._container.addChild(_this._grant);
+				_this._giphy.x = faceShape.candideShapeVertices[0]-25;
+				_this._giphy.y = faceShape.candideShapeVertices[1]-70;
+				_this._container.addChild(_this._giphy);
 			} else if(state == lib.BRFState.FACE_TRACKING) {
 				// FACE_TRACKING does update the candide properties.
-				_this._grant.x = faceShape.candideShapeVertices[0];
-				_this._grant.y = faceShape.candideShapeVertices[1]-80;
 
-				_this._bitmap.x=faceShape.candideShapeVertices[126]-100;
-				_this._bitmap.y=faceShape.candideShapeVertices[127]-60;
+				_this._giphy.x = faceShape.candideShapeVertices[0]-25;
+				_this._giphy.y = faceShape.candideShapeVertices[1]-70;
 
 				//lib.DrawingUtils.drawTriangles(_this._draw, faceShape.candideShapeVertices, faceShape.candideShapeTriangles);//將點畫成線，形成面
 				//lib.DrawingUtils.img(_this._draw, faceShape.candideShapeVertices);
 				//lib.DrawingUtils.drawTrianglesAsPoints(_this._draw, faceShape.candideShapeVertices);//verticeLength=226
-				add = true;
+				//add = true;
 			}
 		};
 	}).inheritsFrom(lib.ExampleBase);
