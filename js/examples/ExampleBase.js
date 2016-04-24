@@ -135,13 +135,13 @@ function initExample() {
 		// Here are some presets for a quick start:
 
 		// 240p camera resolution + 320x240 BRF roi + 320x240 face detection roi + doubled screenRect size to scale the video up
-//		_this._cameraResolution		= cameraResolution	|| new lib.Rectangle(   0,   0,  320, 240),	// Camera resolution
-//		_this._brfResolution		= brfResolution		|| new lib.Rectangle(   0,   0,  320, 240),	// BRF BitmapData size
-//		_this._brfRoi				= brfRoi			|| new lib.Rectangle(   0,   0,  320, 240),	// BRF region of interest within BRF BitmapData size
-//		_this._faceDetectionRoi		= faceDetectionRoi	|| new lib.Rectangle(   0,   0,  320, 240),	// BRF face detection region of interest within BRF BitmapData size
-//		_this._screenRect			= screenRect		|| new lib.Rectangle(   0,   0,  640, 480),	// Shown video screen rectangle
+		//_this._cameraResolution		= cameraResolution	|| new lib.Rectangle(   0,   0,  320, 240),	// Camera resolution
+		//_this._brfResolution		= brfResolution		|| new lib.Rectangle(   0,   0,  320, 240),	// BRF BitmapData size
+		//_this._brfRoi				= brfRoi			|| new lib.Rectangle(   0,   0,  320, 240),	// BRF region of interest within BRF BitmapData size
+		//_this._faceDetectionRoi		= faceDetectionRoi	|| new lib.Rectangle(   0,   0,  320, 240),	// BRF face detection region of interest within BRF BitmapData size
+		//_this._screenRect			= screenRect		|| new lib.Rectangle(   0,   0,  640, 480),	// Shown video screen rectangle
 		
-		// 480p camera resolution + 480x400 BRF roi + 320x320 centered face detection roi + 480p screenRect
+		//// 480p camera resolution + 480x400 BRF roi + 320x320 centered face detection roi + 480p screenRect
 		_this._cameraResolution		= cameraResolution	|| new lib.Rectangle(   0,   0,  640, 480),	// Camera resolution
 		_this._brfResolution		= brfResolution		|| new lib.Rectangle(   0,   0,  640, 480),	// BRF BitmapData size
 		_this._brfRoi				= brfRoi			|| new lib.Rectangle(  80,  40,  480, 400),	// BRF region of interest within BRF BitmapData size
@@ -156,11 +156,11 @@ function initExample() {
 //		_this._screenRect			= screenRect		|| new lib.Rectangle(   0,   0, 1280, 720),	// Shown video screen rectangle
 
 		// 720p camera resolution + 640x480 BRF roi + 320x320 face detection roi + 720p screenRect
-//		_this._cameraResolution		= cameraResolution	|| new lib.Rectangle(   0,   0, 1280, 720),	// Camera resolution
-//		_this._brfResolution		= brfResolution		|| new lib.Rectangle(   0,   0,  640, 480),	// BRF BitmapData size
-//		_this._brfRoi				= brfRoi			|| new lib.Rectangle(   0,   0,  640, 480),	// BRF region of interest within BRF BitmapData size
-//		_this._faceDetectionRoi		= faceDetectionRoi	|| new lib.Rectangle( 160,  80,  320, 320),	// BRF face detection region of interest within BRF BitmapData size
-//		_this._screenRect			= screenRect		|| new lib.Rectangle(   0,   0, 1280, 720),	// Shown video screen rectangle
+		//_this._cameraResolution		= cameraResolution	|| new lib.Rectangle(   0,   0, 1280, 720),	// Camera resolution
+		//_this._brfResolution		= brfResolution		|| new lib.Rectangle(   0,   0,  640, 480),	// BRF BitmapData size
+		//_this._brfRoi				= brfRoi			|| new lib.Rectangle(   0,   0,  640, 480),	// BRF region of interest within BRF BitmapData size
+		//_this._faceDetectionRoi		= faceDetectionRoi	|| new lib.Rectangle( 160,  80,  320, 320),	// BRF face detection region of interest within BRF BitmapData size
+		//_this._screenRect			= screenRect		|| new lib.Rectangle(   0,   0, 1280, 720),	// Shown video screen rectangle
 		
 		_this._maskContainer		= maskContainer;	// Mask the video and draw container to match the screen rect width and height.
 		_this._mirrored				= webcamInput;		// Mirror webcam, but don't mirror images.
@@ -237,7 +237,13 @@ function initExample() {
 			
 			_this.updateMatrices();
 		};
-		
+		document.getElementById('changegif').onclick = function(){
+			document.getElementById('changegif').disabled = true;
+			console.log("change");
+		};
+		_this.changeGif = function(){
+			console.log("change");
+		};
 		/**
 		 * Init BRF once. Reuse the _brfManager instance, don't create a new one.
 		 * 
@@ -273,7 +279,7 @@ function initExample() {
 		 * Init the webcam.
 		 */
 		_this.initCamera = function() {
-			console.log(_this._cameraResolution.width, _this._cameraResolution.height)
+			console.log("initCamera",_this._cameraResolution.width, _this._cameraResolution.height)
 			_this._camera = lib.Camera.getCamera("0", _this._cameraResolution.width, _this._cameraResolution.height);
 			console.log(_this._camera);
 			if(_this._camera != null) {
@@ -295,7 +301,7 @@ function initExample() {
 						]
 					}
 				};
-
+				//console.log(constraints);
 				var getUserMedia =
 					window.navigator.getUserMedia ||
 					window.navigator.mozGetUserMedia ||
@@ -330,16 +336,16 @@ function initExample() {
 			} else {
 				//init rest
 				console.log("Stream dimensions: " +  _this._camera.videoWidth + "x" + _this._camera.videoHeight);
-				
+
 				// false: leave _screenRect as it was meant to be.
 				// true: set _screenRect to _cameraResolution values.
 				_this.updateCameraResolution(_this._camera.videoWidth, _this._camera.videoHeight, true);
 
-				// Set Caemra ready and start, if BRF is ready, too.
+				// Set Camera ready and start, if BRF is ready, too.
 				// (which it won't, because initBRF is done afterwards ;))
 				_this._cameraReady = true;
 				_this.start();
-				
+
 				_this.initBRF();
 			}
 		};
@@ -450,28 +456,29 @@ function initExample() {
 		 * to update the matrices and the whole GUI.
 		 */
 		_this.updateMatrices = function() {
-			
+
 			// update visible content
-			
+
 			var screenRatio = _this._screenRect.width / _this._screenRect.height;
 			var videoRatio = _this._cameraResolution.width / _this._cameraResolution.height;
 			var zoom = 1.0;
-			
+			//console.log(_this._screenRect.width , _this._screenRect.height,_this._cameraResolution.width , _this._cameraResolution.height);
+
 			if(screenRatio <= videoRatio) {
 				zoom = _this._cameraResolution.height / _this._screenRect.height;
 			} else {
-				zoom = _this._cameraResolution.width / _this._screenRect.width;				
+				zoom = _this._cameraResolution.width / _this._screenRect.width;
 			}
-				
+
 			var videoToScreenScale = 1.0 / zoom;
-			
+
 			_this._videoToScreenMatrix.a = videoToScreenScale;
 			_this._videoToScreenMatrix.b = 0.0;
 			_this._videoToScreenMatrix.c = 0.0;
 			_this._videoToScreenMatrix.d = videoToScreenScale;
 			_this._videoToScreenMatrix.tx = videoToScreenScale * (_this._screenRect.width  * zoom - _this._cameraResolution.width)  * 0.5;
 			_this._videoToScreenMatrix.ty = videoToScreenScale * (_this._screenRect.height * zoom - _this._cameraResolution.height) * 0.5;
-			
+
 			if(_this._cameraRotation != 0) {
 				if(_this._cameraRotation == 90) {
 					_this._videoToScreenMatrix.rotate(_this._cameraRotation * Math.PI / 180);
@@ -482,16 +489,16 @@ function initExample() {
 					_this._videoToScreenMatrix.translate(0, _this._screenRect.height);
 				}
 			}
-			
+
 			if(_this._mirrored) {
 				_this._videoToScreenMatrix.scale(-1.0, 1.0);
 				_this._videoToScreenMatrix.translate(_this._screenRect.width, 0.0);
 //				_this._videoToScreenMatrix.translate(_this._cameraResolution.width, 0.0);
 			}
-			
+
 //			_video.transform.matrix = _videoToScreenMatrix.clone();
 //			_video.smoothing = true;
-			
+
 			_this._videoBitmapData.canvas.getContext("2d").setTransform(
 				_this._videoToScreenMatrix.a,
 				_this._videoToScreenMatrix.b,
@@ -500,7 +507,7 @@ function initExample() {
 				_this._videoToScreenMatrix.tx,
 				_this._videoToScreenMatrix.ty
 			);
-			
+
 			// update brf BitmapData filling matrix
 
 			var brfRatio = _this._brfResolution.width / _this._brfResolution.height;
@@ -512,14 +519,14 @@ function initExample() {
 			}
 
 			var videoToBRFScale = 1 / zoom;
-			
+
 			_this._videoToBRFMatrix.a = videoToBRFScale;
 			_this._videoToBRFMatrix.b = 0.0;
 			_this._videoToBRFMatrix.c = 0.0;
 			_this._videoToBRFMatrix.d = videoToBRFScale;
 			_this._videoToBRFMatrix.tx = videoToBRFScale * (_this._brfResolution.width  * zoom - _this._cameraResolution.width)  * 0.5;
 			_this._videoToBRFMatrix.ty = videoToBRFScale * (_this._brfResolution.height * zoom - _this._cameraResolution.height) * 0.5;
-				
+
 			if(_this._cameraRotation != 0) {
 				if(_this._cameraRotation == 90) {
 					_this._videoToBRFMatrix.rotate(_this._cameraRotation * Math.PI / 180);
@@ -530,12 +537,12 @@ function initExample() {
 					_this._videoToBRFMatrix.translate(0, _this._brfResolution.height);
 				}
 			}
-			
+
 			if(_this._mirrored) {
 				_this._videoToBRFMatrix.scale(-1.0, 1.0);
 				_this._videoToBRFMatrix.translate(_this._brfResolution.width, 0.0);
 			}
-			
+
 			_this._brfBmd.canvas.getContext("2d").setTransform(
 				_this._videoToBRFMatrix.a,
 				_this._videoToBRFMatrix.b,
@@ -544,19 +551,19 @@ function initExample() {
 				_this._videoToBRFMatrix.tx,
 				_this._videoToBRFMatrix.ty
 			);
-			
+
 			// update the GUI
-			
+
 			_this._container.x = _this._screenRect.x;
 			_this._container.y = _this._screenRect.y;
-			
+
 			_this._drawSprite.scaleX = _this._videoToScreenMatrix.d / _this._videoToBRFMatrix.d;
 			_this._drawSprite.scaleY = _this._drawSprite.scaleX;
 			_this._drawSprite.x = (_this._screenRect.width  - _this._brfResolution.width  * _this._drawSprite.scaleX) * 0.5;
 			_this._drawSprite.y = (_this._screenRect.height - _this._brfResolution.height * _this._drawSprite.scaleY) * 0.5;
-			
+
 //			_stats.x = _screenRect.x + _screenRect.width - _stats.WIDTH;
-			
+
 			// To get local X and Y value, we need am area, that is the same size
 			// as the BitmapData, but streched to the screenRect.
 			// This way we get the correct x and y for PointTracking.
@@ -569,7 +576,7 @@ function initExample() {
 			_this._clickArea.y = _this._drawSprite.y;
 			_this._clickArea.scaleX = _this._drawSprite.scaleX;
 			_this._clickArea.scaleY = _this._drawSprite.scaleY;
-			
+
 			// Hide screenRect overlapping content
 			_this._containerMask.graphics.clear();
 			_this._containerMask.graphics.beginFill("#ffffff");
@@ -577,7 +584,7 @@ function initExample() {
 			_this._containerMask.graphics.endFill();
 			_this._containerMask.x = _this._screenRect.x;
 			_this._containerMask.y = _this._screenRect.y;
-			
+
 			if(_this._maskContainer) {
 				_this._container.mask = _this._containerMask;
 			}
