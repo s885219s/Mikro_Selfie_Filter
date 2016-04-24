@@ -118,6 +118,9 @@ function initExample() {
 		// HTML5 specific vars
 		_this._videoBitmapData = null;
 
+		_this._animation = null;
+		_this._num = 0;
+		_this._change = false;
 		/**
 		 * You can of course put in your own custom resolution rectangles here.
 		 * Or you just use one of the following presets for a quick start.
@@ -199,19 +202,6 @@ function initExample() {
 			_this._drawSprite = new cjs.Shape();
 			_this._draw = _this._drawSprite.graphics;
 
-			_this._spriteSheet = new cjs.SpriteSheet({
-				framerate: 4,
-				"images": ["media/images/frame.png"],
-				"frames": {"regX": 0, "regY": 0, "width": 210, "height": 595, "count": 4},
-				// define two animations, run (loops, 1.5x speed) and jump (returns to run):
-				"animations": {
-					"shake": [0, 3, "shake",0.8]
-				}
-			});
-			_this._giphy = new cjs.Sprite(_this._spriteSheet, "shake");
-			_this._giphy.scaleX = 0.2;
-			_this._giphy.scaleY = 0.2;
-
 			_this._videoBitmapData = new cjs.BitmapData(null, _this._screenRect.width, _this._screenRect.height, 0xffffffff);
 			_this._video = new cjs.Bitmap(_this._videoBitmapData.canvas);
 			
@@ -237,13 +227,50 @@ function initExample() {
 			
 			_this.updateMatrices();
 		};
-		document.getElementById('changegif').onclick = function(){
-			document.getElementById('changegif').disabled = true;
-			console.log("change");
+		document.getElementById('one').onclick = function(){
+			//document.getElementById('one').disabled = true;
+			if(_this._num!=1 && _this._num!=0) {
+				_this._container.removeChild(_this._animation);
+				_this._animation = _this._giphy;
+				_this._container.addChild(_this._animation);
+			}
+			_this._num = 1 ;
+			_this._spriteSheet = new cjs.SpriteSheet({
+				framerate: 4,
+				"images": ["media/images/frame.png"],
+				"frames": {"regX": 0, "regY": 0, "width": 210, "height": 595, "count": 4},
+				// define two animations, run (loops, 1.5x speed) and jump (returns to run):
+				"animations": {
+					"shake": [0, 3, "shake",0.8]
+				}
+			});
+			_this._giphy = new cjs.Sprite(_this._spriteSheet, "shake");
+			_this._giphy.scaleX = 0.2;
+			_this._giphy.scaleY = 0.2;
+
+			console.log("one");
 		};
-		_this.changeGif = function(){
-			console.log("change");
+
+		document.getElementById('two').onclick = function(){
+			//document.getElementById('two').disabled = true;
+			if(_this._num!=2 && _this._num!=0) {
+				_this._container.removeChild(_this._animation);
+				_this._animation = _this._pika;
+				_this._container.addChild(_this._animation);
+			}
+			_this._num = 2 ;
+			_this._change = true;
+			var pika = new Image();
+			pika = "media/images/pika.png"
+			_this._pika = new cjs.Bitmap(pika);
+			_this._pika.scaleX = 0.2;
+			_this._pika.scaleY = 0.2;
+			console.log("two");
 		};
+
+		// _this.switchGif = function(){
+		//
+		// };
 		/**
 		 * Init BRF once. Reuse the _brfManager instance, don't create a new one.
 		 * 

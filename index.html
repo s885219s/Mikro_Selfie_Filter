@@ -51,8 +51,7 @@
 	<!--<script src="js/examples/ExamplePointTracking.js"></script>-->
 	<!--<script src="js/examples/ExampleFaceDetection.js"></script>-->
 	<!--<script src="js/examples/ExampleFaceTracking.js"></script>-->
-	 <script src="js/examples/ExampleCandideTracking.js"></script>
-
+	<script src="js/examples/ExampleCandideTracking.js"></script>
 	<!--
 		720p/HD webcam examples. These will also need their base classes.
 		e.g. ExampleFaceTracking1280x720.js will need ExampleFaceTracking.js
@@ -89,51 +88,11 @@
 		<button id="start" contenteditable="false">Start Canvas Recording</button>
 		<button id="stop" disabled contenteditable="false">Stop</button>
 		<button id="save-to-disk">Save To Disk</button>
-		<botton id="changegif" contenteditable="false">change</botton>
+		<button id="one" contenteditable="false">one</button>
+		<button id="two" contenteditable="false">two</button>
 	</div>
-
-	<script>
-		var elementToShare = document.getElementById('elementToShare');
-		var recorder = RecordRTC(elementToShare, {
-			type: 'canvas',
-			showMousePointer: false,
-			disableLogs: false
-		});
-
-		document.getElementById('start').onclick = function() {
-			document.getElementById('start').disabled = true;
-			recorder.startRecording();
-			setTimeout(function() {
-				document.getElementById('stop').disabled = false;
-			}, 1000);
-		};
-		document.getElementById('stop').onclick = function() {
-			this.disabled = true;
-			recorder.stopRecording();
-//			recorder.stopRecording(function(url) {
-//				var video = document.createElement('video');
-//				video.src = url;
-//				video.setAttribute('style', 'width="1280" height="720" style="position:absolute;left:0px;top:0px;');
-//				document.body.appendChild(video);
-//				video.controls = true;
-//				video.play();
-//				window.open(url);
-//			});
-		};
-		window.onbeforeunload = function() {
-			document.getElementById('start').disabled = false;
-			document.getElementById('stop').disabled = true;
-		};
-		document.getElementById('save-to-disk').onclick = function(){
-			this.disabled = true;
-			recorder.save();
-		};
-		window.onbeforeunload = function() {
-			document.getElementById('start').disabled = false;
-			document.getElementById('stop').disabled = true;
-		};
-		webrtcUtils.enableLogs = false;
-	</script>
+	<script src="js/examples/RecordCanvas.js"></script>
+	<!--window.addEventListener('load', initAudio );-->
 	<!--
 		The Beyond Reality Face Nxt logo.
 		Please be fair and don't hide the logo! Thanks.
