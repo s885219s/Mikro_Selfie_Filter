@@ -118,7 +118,13 @@ function initExample() {
 		// HTML5 specific vars
 		_this._videoBitmapData = null;
 
-		_this._animation = null;
+		_this._animation = new Object();
+		_this._animation._show = null;
+		_this._animation._position = 0;
+		//_this._animation._positiony = 0;
+		_this._animation._adjx = 0;
+		_this._animation._adjy = 0;
+
 		_this._num = 0;
 		_this._change = false;
 		/**
@@ -204,7 +210,25 @@ function initExample() {
 
 			_this._videoBitmapData = new cjs.BitmapData(null, _this._screenRect.width, _this._screenRect.height, 0xffffffff);
 			_this._video = new cjs.Bitmap(_this._videoBitmapData.canvas);
-			
+
+			_this._spriteSheet = new cjs.SpriteSheet({
+				framerate: 4,
+				"images": ["media/images/frame.png"],
+				"frames": {"regX": 0, "regY": 0, "width": 210, "height": 595, "count": 4},
+				// define two animations, run (loops, 1.5x speed) and jump (returns to run):
+				"animations": {
+					"shake": [0, 3, "shake",0.8]
+				}
+			});
+			_this._giphy = new cjs.Sprite(_this._spriteSheet, "shake");
+			_this._giphy.scaleX = 0.2;
+			_this._giphy.scaleY = 0.2;
+			_this._animation._show = _this._giphy;
+			_this._animation._position = 0;
+			_this._animation._adjx = 25;
+			_this._animation._adjy = 70;
+			_this._num = 1 ;
+
 			if (window['Stats'] !== undefined) {
 				_this._stats = new Stats();
 				_this._stats.setMode(0);
@@ -229,12 +253,7 @@ function initExample() {
 		};
 		document.getElementById('one').onclick = function(){
 			//document.getElementById('one').disabled = true;
-			if(_this._num!=1 && _this._num!=0) {
-				_this._container.removeChild(_this._animation);
-				_this._animation = _this._giphy;
-				_this._container.addChild(_this._animation);
-			}
-			_this._num = 1 ;
+
 			_this._spriteSheet = new cjs.SpriteSheet({
 				framerate: 4,
 				"images": ["media/images/frame.png"],
@@ -247,24 +266,37 @@ function initExample() {
 			_this._giphy = new cjs.Sprite(_this._spriteSheet, "shake");
 			_this._giphy.scaleX = 0.2;
 			_this._giphy.scaleY = 0.2;
-
+			if(_this._num!=1 && _this._num!=0) {
+				_this._container.removeChild(_this._animation._show);
+				_this._animation._show = _this._giphy;
+				_this._container.addChild(_this._animation._show);
+			}
+			_this._animation._position = 0;
+			_this._animation._adjx = 25;
+			_this._animation._adjy = 70;
+			_this._num = 1 ;
 			console.log("one");
 		};
 
 		document.getElementById('two').onclick = function(){
 			//document.getElementById('two').disabled = true;
-			if(_this._num!=2 && _this._num!=0) {
-				_this._container.removeChild(_this._animation);
-				_this._animation = _this._pika;
-				_this._container.addChild(_this._animation);
-			}
-			_this._num = 2 ;
-			_this._change = true;
+
+			//_this._change = true;
 			var pika = new Image();
 			pika = "media/images/pika.png"
 			_this._pika = new cjs.Bitmap(pika);
 			_this._pika.scaleX = 0.2;
 			_this._pika.scaleY = 0.2;
+			if(_this._num!=2 && _this._num!=0) {
+				_this._container.removeChild(_this._animation._show);
+				_this._animation._show = _this._pika;
+				_this._container.addChild(_this._animation._show);
+			}
+			_this._animation._position = 126;
+			_this._animation._adjx = 50;
+			_this._animation._adjy = 40;
+			_this._num = 2 ;
+
 			console.log("two");
 		};
 

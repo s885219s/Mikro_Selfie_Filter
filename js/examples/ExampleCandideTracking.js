@@ -96,7 +96,10 @@ function initExample() {
 			// Get the current BRFState and faceShape.
 			var state = _this._brfManager.state;
 			var faceShape = _this._brfManager.faceShape;
-
+			var animation = _this._animation._show;
+			var i = _this._animation._position;
+			var x = _this._animation._adjx;
+			var y = _this._animation._adjy;
 
 			// Draw BRFs region of interest, that got analysed:
 			lib.DrawingUtils.drawRect(_this._draw, _this._brfRoi, false, 1.0, "#acfeff", 1.0);
@@ -107,21 +110,20 @@ function initExample() {
 				lib.DrawingUtils.drawRect(_this._draw, _this._faceDetectionRoi, false, 1.0, "#ffff00", 1.0);//比較裡面的那個筐
 
 				if(add) {
-					_this._container.removeChild(_this._animation);
+					_this._container.removeChild(animation);
 					add = false;
 				}
 
 				switch(_this._num){
 					case 1:
-						_this._animation = _this._giphy;
+						animation = _this._giphy;
 						break;
 					case 2:
-						_this._animation = _this._pika;
+						animation = _this._pika;
 						break;
 					default:
-						console.log("fuck");
+						console.log(animation);
 				}
-
 
 				// And draw the ony result, that got calculated from lastDetectedFaces.
 				var rect = _this._brfManager.lastDetectedFace;
@@ -139,15 +141,15 @@ function initExample() {
 				lib.DrawingUtils.drawTrianglesAsPoints(_this._draw, faceShape.faceShapeVertices);//畫出點
 				lib.DrawingUtils.drawRect(_this._draw, faceShape.bounds);//以方形畫臉的輪廓
 
-				_this._animation.x = faceShape.candideShapeVertices[0]-25;
-				_this._animation.y = faceShape.candideShapeVertices[1]-70;
-				_this._container.addChild(_this._animation);
+				animation.x = faceShape.candideShapeVertices[i]-x;
+				animation.y = faceShape.candideShapeVertices[i+1]-y;
+				_this._container.addChild(animation);
 				add = true;
 			} else if(state == lib.BRFState.FACE_TRACKING) {
 				// FACE_TRACKING does update the candide properties.
-				if(_this._animation!=null){
-					_this._animation.x = faceShape.candideShapeVertices[0]-25;
-					_this._animation.y = faceShape.candideShapeVertices[1]-70;
+				if(animation!=null){
+					animation.x = faceShape.candideShapeVertices[i]-x;
+					animation.y = faceShape.candideShapeVertices[i+1]-y;
 				}
 				//lib.DrawingUtils.drawTriangles(_this._draw, faceShape.candideShapeVertices, faceShape.candideShapeTriangles);//將點畫成線，形成面
 				//lib.DrawingUtils.img(_this._draw, faceShape.candideShapeVertices);
