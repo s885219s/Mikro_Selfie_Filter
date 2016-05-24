@@ -75,8 +75,11 @@
 		This is the canvas for createjs (the stage). You can change the size to any values.
 		You just need to set screenRect to place the video/results at a certain position on that stage.
 	-->
-	<div id="elementToShare">
-	<canvas id="_stage" width="640" height="480">Your browser does not seem to support canvas elements.</canvas>
+	<div id="faceCanvas">
+		<div id="elementToShare">
+			<canvas id="_stage" width="640" height="480">Your browser does not seem to support canvas elements.</canvas>
+			<img src="media/assets/mikro_logo_white1.png" style="opacity:0.75;position:absolute;top:0%;left:0%;"/>
+		</div>
 	</div>
 	<!--
 		Chrome on Android v35+ supports getUserMedia! But the video needs to be started on user action.
@@ -90,6 +93,9 @@
 		<button id="save-to-disk">Save To Disk</button>
 		<button id="one" contenteditable="false">one</button>
 		<button id="two" contenteditable="false">two</button>
+		<button id="three" contenteditable="false">three</button>
+		<button id="four" contenteditable="false">four</button>
+
 	</div>
 	<script src="js/examples/RecordCanvas.js"></script>
 	<!--window.addEventListener('load', initAudio );-->
@@ -99,8 +105,8 @@
 	-->
 	<!--<div id="brfLogo">-->
 		<!--<a href="https://www.beyond-reality-face.com" target="_blank">-->
-			<!--<img src="media/assets/brf_nxt_logo_black.png" style="opacity:0.35;position:absolute;top:75%;left:9px;"/>-->
-			<!--<img src="media/assets/brf_nxt_logo_white.png" style="opacity:0.75;position:absolute;top:75%;left:8px;"/>-->
+			<!--&lt;!&ndash;<img src="media/assets/brf_nxt_logo_black.png" style="opacity:0.35;position:absolute;top:50%;left:50%;"/>&ndash;&gt;-->
+			<!--<img src="media/assets/mikro_logo_white1.png" style="opacity:0.75;position:absolute;top:15%;left:25%;"/>-->
 		<!--</a>-->
 	<!--</div>-->
 </body>

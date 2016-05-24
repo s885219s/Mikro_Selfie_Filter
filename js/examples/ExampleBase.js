@@ -22,7 +22,7 @@ function initExample() {
 		var _stage = new createjs.Stage("_stage");
 		_stage.enableMouseOver(10);
 		
-		createjs.Ticker.setFPS(30);
+		createjs.Ticker.setFPS(24);
 		createjs.Ticker.addEventListener("tick", _stage);
 		//console.log(_stage);
 		return _stage;
@@ -144,10 +144,10 @@ function initExample() {
 		// Here are some presets for a quick start:
 
 		// 240p camera resolution + 320x240 BRF roi + 320x240 face detection roi + doubled screenRect size to scale the video up
-		//_this._cameraResolution		= cameraResolution	|| new lib.Rectangle(   0,   0,  320, 240),	// Camera resolution
+		//_this._cameraResolution	= cameraResolution	|| new lib.Rectangle(   0,   0,  320, 240),	// Camera resolution
 		//_this._brfResolution		= brfResolution		|| new lib.Rectangle(   0,   0,  320, 240),	// BRF BitmapData size
 		//_this._brfRoi				= brfRoi			|| new lib.Rectangle(   0,   0,  320, 240),	// BRF region of interest within BRF BitmapData size
-		//_this._faceDetectionRoi		= faceDetectionRoi	|| new lib.Rectangle(   0,   0,  320, 240),	// BRF face detection region of interest within BRF BitmapData size
+		//_this._faceDetectionRoi	= faceDetectionRoi	|| new lib.Rectangle(   0,   0,  320, 240),	// BRF face detection region of interest within BRF BitmapData size
 		//_this._screenRect			= screenRect		|| new lib.Rectangle(   0,   0,  640, 480),	// Shown video screen rectangle
 		
 		//// 480p camera resolution + 480x400 BRF roi + 320x320 centered face detection roi + 480p screenRect
@@ -156,7 +156,7 @@ function initExample() {
 		_this._brfRoi				= brfRoi			|| new lib.Rectangle(  80,  40,  480, 400),	// BRF region of interest within BRF BitmapData size
 		_this._faceDetectionRoi		= faceDetectionRoi	|| new lib.Rectangle( 160,  80,  320, 320),	// BRF face detection region of interest within BRF BitmapData size
 		_this._screenRect			= screenRect		|| new lib.Rectangle(   0,   0,  640, 480),	// Shown video screen rectangle
-		
+
 		// 720p camera resolution + 520x400 BRF roi + 320x320 face detection roi + 720p screenRect
 //		_this._cameraResolution		= cameraResolution	|| new lib.Rectangle(   0,   0, 1280, 720),	// Camera resolution
 //		_this._brfResolution		= brfResolution		|| new lib.Rectangle(   0,   0,  640, 480),	// BRF BitmapData size
@@ -214,19 +214,19 @@ function initExample() {
 			_this._spriteSheet = new cjs.SpriteSheet({
 				framerate: 4,
 				"images": ["media/images/frame.png"],
-				"frames": {"regX": 0, "regY": 0, "width": 210, "height": 595, "count": 4},
+				"frames": {"regX": 0, "regY": 0, "width": 100, "height": 283, "count": 4},
 				// define two animations, run (loops, 1.5x speed) and jump (returns to run):
 				"animations": {
 					"shake": [0, 3, "shake",0.8]
 				}
 			});
 			_this._giphy = new cjs.Sprite(_this._spriteSheet, "shake");
-			_this._giphy.scaleX = 0.2;
-			_this._giphy.scaleY = 0.2;
+			_this._giphy.scaleX = 0.4;
+			_this._giphy.scaleY = 0.4;
 			_this._animation._show = _this._giphy;
-			_this._animation._position = 0;
-			_this._animation._adjx = 25;
-			_this._animation._adjy = 70;
+			_this._animation._position = 124;
+			_this._animation._adjx = 37;
+			_this._animation._adjy = 84;
 			_this._num = 1 ;
 
 			if (window['Stats'] !== undefined) {
@@ -237,18 +237,18 @@ function initExample() {
 				_this._stats.domElement.style.left = (_this._screenRect.x + _this._screenRect.width - 80.0) + 'px';
 				document.body.appendChild(_this._stats.domElement);
 			}
-			
+
 			_this._videoToBRFMatrix = new lib.Matrix();
 			_this._videoToScreenMatrix = new lib.Matrix();
-			
+
 			_this._brfBmd = new cjs.BitmapData(null, _this._brfResolution.width, _this._brfResolution.height, 0xff444444);
-			
+
 			_this._webcamInput && _this._container.addChild(_this._video);
 			_this._container.addChild(_this._drawSprite);
 //			_this._container.addChild(_this._stats);
 			_this._container.addChild(_this._clickArea);
 			_this.addChild(_this._container);
-			
+
 			_this.updateMatrices();
 		};
 		document.getElementById('one').onclick = function(){
@@ -257,52 +257,128 @@ function initExample() {
 			_this._spriteSheet = new cjs.SpriteSheet({
 				framerate: 4,
 				"images": ["media/images/frame.png"],
-				"frames": {"regX": 0, "regY": 0, "width": 210, "height": 595, "count": 4},
+				"frames": {"regX": 0, "regY": 0, "width": 100, "height": 283, "count": 4},
 				// define two animations, run (loops, 1.5x speed) and jump (returns to run):
 				"animations": {
 					"shake": [0, 3, "shake",0.8]
 				}
 			});
 			_this._giphy = new cjs.Sprite(_this._spriteSheet, "shake");
-			_this._giphy.scaleX = 0.2;
-			_this._giphy.scaleY = 0.2;
+			_this._giphy.scaleX = 0.4;
+			_this._giphy.scaleY = 0.4;
 			if(_this._num!=1 && _this._num!=0) {
+				_this._container.removeChild(_this._animation._show);
+				_this._animation._show = _this._giphy;
+				_this._container.addChild(_this._animation._show);
+			}
+			_this._animation._position = 124;
+			_this._animation._adjx = 37;
+			_this._animation._adjy = 84;
+			_this._num = 1 ;
+			console.log("one");
+		};
+
+		document.getElementById('two').onclick = function(){
+
+
+			_this._spriteSheet = new cjs.SpriteSheet({
+				framerate: 8,
+				"images": ["media/images/touch.png"],
+				"frames": {"regX": 0, "regY": 0, "width": 100, "height": 178, "count": 8},
+				// define two animations, run (loops, 1.5x speed) and jump (returns to run):
+				"animations": {
+					"hand": [0, 7, "hand", 1]
+				}
+			});
+			_this._giphy = new cjs.Sprite(_this._spriteSheet, "hand");
+			_this._giphy.scaleX = 0.6;
+			_this._giphy.scaleY = 0.6;
+			if(_this._num!=0 && _this._num!=2) {
+				_this._container.removeChild(_this._animation._show);
+				_this._animation._show = _this._giphy;
+				_this._container.addChild(_this._animation._show);
+			}
+			_this._animation._position = 60;
+			_this._animation._adjx = 0;
+			_this._animation._adjy = 65;
+			_this._num = 2 ;
+			console.log("two");
+		};
+
+		document.getElementById('three').onclick = function(){
+			_this._spriteSheet = new cjs.SpriteSheet({
+				framerate: 14,
+				"images": ["media/images/sit.png"],
+				"frames": {"regX": 0, "regY": 0, "width": 100, "height": 183, "count": 14},
+				// define two animations, run (loops, 1.5x speed) and jump (returns to run):
+				"animations": {
+					"leg": [0, 13, "leg", 1]
+				}
+			});
+			_this._giphy = new cjs.Sprite(_this._spriteSheet, "leg");
+			_this._giphy.scaleX = 0.6;
+			_this._giphy.scaleY = 0.6;
+			if(_this._num!=0 && _this._num!=3) {
+				_this._container.removeChild(_this._animation._show);
+				_this._animation._show = _this._giphy;
+				_this._container.addChild(_this._animation._show);
+			}
+			_this._animation._position = 20;
+			_this._animation._adjx = 25;
+			_this._animation._adjy = 170;
+			_this._num = 3 ;
+			console.log("three");
+		};
+		//document.getElementById('two').onclick = function(){
+		//	//document.getElementById('two').disabled = true;
+        //
+		//	//_this._change = true;
+		//	var pika = new Image();
+		//	pika = "media/images/pika.png"
+		//	_this._pika = new cjs.Bitmap(pika);
+		//	_this._pika.scaleX = 0.2;
+		//	_this._pika.scaleY = 0.2;
+		//	if(_this._num!=2 && _this._num!=0) {
+		//		_this._container.removeChild(_this._animation._show);
+		//		_this._animation._show = _this._pika;
+		//		_this._container.addChild(_this._animation._show);
+		//	}
+		//	_this._animation._position = 126;
+		//	_this._animation._adjx = 50;
+		//	_this._animation._adjy = 40;
+		//	_this._num = 2 ;
+        //
+		//	console.log("two");
+		//};
+
+
+
+		document.getElementById('four').onclick = function(){
+			//document.getElementById('one').disabled = true;
+
+			_this._spriteSheet = new cjs.SpriteSheet({
+				framerate: 6,
+				"images": ["media/images/flower.png"],
+				"frames": {"regX": 0, "regY": 0, "width": 100, "height": 255, "count": 6},
+				// define two animations, run (loops, 1.5x speed) and jump (returns to run):
+				"animations": {
+					"flower": [0, 5, "flower", 1]
+				}
+			});
+			_this._giphy = new cjs.Sprite(_this._spriteSheet, "flower");
+			_this._giphy.scaleX = 0.6;
+			_this._giphy.scaleY = 0.6;
+			if(_this._num!=0 && _this._num!=4) {
 				_this._container.removeChild(_this._animation._show);
 				_this._animation._show = _this._giphy;
 				_this._container.addChild(_this._animation._show);
 			}
 			_this._animation._position = 0;
 			_this._animation._adjx = 25;
-			_this._animation._adjy = 70;
-			_this._num = 1 ;
-			console.log("one");
+			_this._animation._adjy = 100;
+			_this._num = 4 ;
+			console.log("four");
 		};
-
-		document.getElementById('two').onclick = function(){
-			//document.getElementById('two').disabled = true;
-
-			//_this._change = true;
-			var pika = new Image();
-			pika = "media/images/pika.png"
-			_this._pika = new cjs.Bitmap(pika);
-			_this._pika.scaleX = 0.2;
-			_this._pika.scaleY = 0.2;
-			if(_this._num!=2 && _this._num!=0) {
-				_this._container.removeChild(_this._animation._show);
-				_this._animation._show = _this._pika;
-				_this._container.addChild(_this._animation._show);
-			}
-			_this._animation._position = 126;
-			_this._animation._adjx = 50;
-			_this._animation._adjy = 40;
-			_this._num = 2 ;
-
-			console.log("two");
-		};
-
-		// _this.switchGif = function(){
-		//
-		// };
 		/**
 		 * Init BRF once. Reuse the _brfManager instance, don't create a new one.
 		 * 
@@ -356,7 +432,7 @@ function initExample() {
 							{width: {max: _this._cameraResolution.width}},
 							{height: {max: _this._cameraResolution.height}},
 							{facingMode: "user"},
-							{minFrameRate: 30}
+							{minFrameRate: 20}
 						]
 					}
 				};

@@ -147,10 +147,12 @@ function initExample() {
 				add = true;
 			} else if(state == lib.BRFState.FACE_TRACKING) {
 				// FACE_TRACKING does update the candide properties.
+
 				if(animation!=null){
 					animation.x = faceShape.candideShapeVertices[i]-x;
 					animation.y = faceShape.candideShapeVertices[i+1]-y;
 				}
+
 				//lib.DrawingUtils.drawTriangles(_this._draw, faceShape.candideShapeVertices, faceShape.candideShapeTriangles);//將點畫成線，形成面
 				//lib.DrawingUtils.img(_this._draw, faceShape.candideShapeVertices);
 				//lib.DrawingUtils.drawTrianglesAsPoints(_this._draw, faceShape.candideShapeVertices);//verticeLength=226

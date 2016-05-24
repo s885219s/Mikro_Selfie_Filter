@@ -48,6 +48,13 @@ function initExample() {
 			new lib.Rectangle(   0,   0, 1280, 720),	// Shown video screen rectangle
 			true,										// Mask the video to exactly match the screenRect area.
 			true										// true for webcam input, false for single image input
+			//new lib.Rectangle(   0,   0,  320, 240),	// Camera resolution
+			//new lib.Rectangle(   0,   0,  320, 240),	// BRF BitmapData size
+			//new lib.Rectangle(   0,   0,  320, 240),	// BRF region of interest within BRF BitmapData size
+			//new lib.Rectangle(   0,   0,  320, 240),	// BRF face detection region of interest within BRF BitmapData size
+			//new lib.Rectangle(   0,   0,  640, 480),	// Shown video screen rectangle
+			//true,
+			//true
 		);
 
 		// All other methods, params etc will be set in and taken from ExampleFaceTracking.

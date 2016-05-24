@@ -236,10 +236,11 @@
 		clear && g.clear();
 
 		var i = 0;
+		//var l = 130;
 		var l = vertices.length;
 
-		//var x = vertices[126]; //20下巴
-		//var y = vertices[127];
+		//var x = vertices[124]; //20下巴 //60右臉頰 //126左臉頰 //124耳朵
+		//var y = vertices[125];
 		//g.beginFill(fillColor);
 		//g.drawCircle(x, y, radius);
 		//g.endFill();
