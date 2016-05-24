@@ -229,14 +229,14 @@ function initExample() {
 			_this._animation._adjy = 84;
 			_this._num = 1 ;
 
-			if (window['Stats'] !== undefined) {
-				_this._stats = new Stats();
-				_this._stats.setMode(0);
-				_this._stats.domElement.style.position = 'absolute';
-				_this._stats.domElement.style.top = _this._screenRect.y + 'px';
-				_this._stats.domElement.style.left = (_this._screenRect.x + _this._screenRect.width - 80.0) + 'px';
-				document.body.appendChild(_this._stats.domElement);
-			}
+			//if (window['Stats'] !== undefined) {
+			//	_this._stats = new Stats();
+			//	_this._stats.setMode(0);
+			//	_this._stats.domElement.style.position = 'absolute';
+			//	_this._stats.domElement.style.top = _this._screenRect.y + 'px';
+			//	_this._stats.domElement.style.left = (_this._screenRect.x + _this._screenRect.width - 80.0) + 'px';
+			//	document.body.appendChild(_this._stats.domElement);
+			//}
 
 			_this._videoToBRFMatrix = new lib.Matrix();
 			_this._videoToScreenMatrix = new lib.Matrix();
@@ -251,6 +251,104 @@ function initExample() {
 
 			_this.updateMatrices();
 		};
+		document.addEventListener('keydown', function(event) {
+			if(event.keyCode == 90) {
+				_this._spriteSheet = new cjs.SpriteSheet({
+					framerate: 4,
+					"images": ["media/images/frame.png"],
+					"frames": {"regX": 0, "regY": 0, "width": 100, "height": 283, "count": 4},
+					// define two animations, run (loops, 1.5x speed) and jump (returns to run):
+					"animations": {
+						"shake": [0, 3, "shake",0.8]
+					}
+				});
+				_this._giphy = new cjs.Sprite(_this._spriteSheet, "shake");
+				_this._giphy.scaleX = 0.4;
+				_this._giphy.scaleY = 0.4;
+				if(_this._num!=1 && _this._num!=0) {
+					_this._container.removeChild(_this._animation._show);
+					_this._animation._show = _this._giphy;
+					_this._container.addChild(_this._animation._show);
+				}
+				_this._animation._position = 124;
+				_this._animation._adjx = 37;
+				_this._animation._adjy = 84;
+				_this._num = 1 ;
+				console.log("one");
+			}
+			else if(event.keyCode == 88) {
+				_this._spriteSheet = new cjs.SpriteSheet({
+					framerate: 8,
+					"images": ["media/images/touch.png"],
+					"frames": {"regX": 0, "regY": 0, "width": 100, "height": 178, "count": 8},
+					// define two animations, run (loops, 1.5x speed) and jump (returns to run):
+					"animations": {
+						"hand": [0, 7, "hand", 1]
+					}
+				});
+				_this._giphy = new cjs.Sprite(_this._spriteSheet, "hand");
+				_this._giphy.scaleX = 0.6;
+				_this._giphy.scaleY = 0.6;
+				if(_this._num!=0 && _this._num!=2) {
+					_this._container.removeChild(_this._animation._show);
+					_this._animation._show = _this._giphy;
+					_this._container.addChild(_this._animation._show);
+				}
+				_this._animation._position = 60;
+				_this._animation._adjx = 0;
+				_this._animation._adjy = 65;
+				_this._num = 2 ;
+				console.log("two");
+			}
+			else if(event.keyCode == 67){
+				_this._spriteSheet = new cjs.SpriteSheet({
+					framerate: 14,
+					"images": ["media/images/sit.png"],
+					"frames": {"regX": 0, "regY": 0, "width": 100, "height": 183, "count": 14},
+					// define two animations, run (loops, 1.5x speed) and jump (returns to run):
+					"animations": {
+						"leg": [0, 13, "leg", 1]
+					}
+				});
+				_this._giphy = new cjs.Sprite(_this._spriteSheet, "leg");
+				_this._giphy.scaleX = 0.6;
+				_this._giphy.scaleY = 0.6;
+				if(_this._num!=0 && _this._num!=3) {
+					_this._container.removeChild(_this._animation._show);
+					_this._animation._show = _this._giphy;
+					_this._container.addChild(_this._animation._show);
+				}
+				_this._animation._position = 20;
+				_this._animation._adjx = 25;
+				_this._animation._adjy = 170;
+				_this._num = 3 ;
+				console.log("three");
+			}
+			else if(event.keyCode == 86){
+				_this._spriteSheet = new cjs.SpriteSheet({
+					framerate: 6,
+					"images": ["media/images/flower.png"],
+					"frames": {"regX": 0, "regY": 0, "width": 100, "height": 255, "count": 6},
+					// define two animations, run (loops, 1.5x speed) and jump (returns to run):
+					"animations": {
+						"flower": [0, 5, "flower", 1]
+					}
+				});
+				_this._giphy = new cjs.Sprite(_this._spriteSheet, "flower");
+				_this._giphy.scaleX = 0.6;
+				_this._giphy.scaleY = 0.6;
+				if(_this._num!=0 && _this._num!=4) {
+					_this._container.removeChild(_this._animation._show);
+					_this._animation._show = _this._giphy;
+					_this._container.addChild(_this._animation._show);
+				}
+				_this._animation._position = 0;
+				_this._animation._adjx = 25;
+				_this._animation._adjy = 100;
+				_this._num = 4 ;
+				console.log("four");
+			}
+		});
 		document.getElementById('one').onclick = function(){
 			//document.getElementById('one').disabled = true;
 

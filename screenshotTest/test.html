@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="html2canvas.js"></script>
+
+<button id="save_image">download img</button>
+
+<div id="imagesave">
+    <img id='local_image' src='pika.png'>
+</div>
+
+<script>
+
+    $('#save_image').click(function(){
+        html2canvas($('#imagesave'),
+                {
+                    onrendered: function (canvas) {
+                        var a = document.createElement('a');
+                        //var img = canvas.toDataURL("image/png");
+                        // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
+                        a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
+                        a.download = 'somefilename.jpg';
+                        a.click();
+                    }
+                });
+    });
+</script>
+</body>
+</html>

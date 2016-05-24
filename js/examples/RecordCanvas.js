@@ -7,6 +7,27 @@ var recorder = RecordRTC(elementToShare, {
     showMousePointer: false,
     disableLogs: false
 });
+document.addEventListener('keydown', function(event) {
+    if(event.keyCode == 13 && !document.getElementById('start').disabled) {
+        document.getElementById('start').disabled = true;
+        recorder.startRecording();
+        setTimeout(function() {
+            document.getElementById('stop').disabled = false;
+        }, 1000);
+    }
+    else if(event.keyCode == 13 && document.getElementById('start').disabled) {
+        document.getElementById('stop').disabled = true;
+        document.getElementById('start').disabled = false;
+        recorder.stopRecording();
+    }
+    else if(event.keyCode == 83){
+        document.getElementById('save-to-disk').disabled = true;
+        recorder.save();
+        setTimeout(function() {
+            document.getElementById('save-to-disk').disabled = false;
+        }, 1000);
+    }
+});
 
 document.getElementById('start').onclick = function() {
     document.getElementById('start').disabled = true;
@@ -17,6 +38,7 @@ document.getElementById('start').onclick = function() {
 };
 document.getElementById('stop').onclick = function() {
     this.disabled = true;
+    document.getElementById('start').disabled = false;
     recorder.stopRecording();
 //			recorder.stopRecording(function(url) {
 //				var video = document.createElement('video');
@@ -35,6 +57,9 @@ window.onbeforeunload = function() {
 document.getElementById('save-to-disk').onclick = function(){
     this.disabled = true;
     recorder.save();
+    setTimeout(function() {
+        document.getElementById('save-to-disk').disabled = false;
+    }, 1000);
 };
 window.onbeforeunload = function() {
     document.getElementById('start').disabled = false;

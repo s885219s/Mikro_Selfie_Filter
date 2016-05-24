@@ -102,7 +102,8 @@ function initExample() {
 			var y = _this._animation._adjy;
 
 			// Draw BRFs region of interest, that got analysed:
-			lib.DrawingUtils.drawRect(_this._draw, _this._brfRoi, false, 1.0, "#acfeff", 1.0);
+
+			//lib.DrawingUtils.drawRect(_this._draw, _this._brfRoi, false, 1.0, "#acfeff", 1.0);//外圈藍色的筐
 
 			if(state == lib.BRFState.FACE_DETECTION) {
 				// Last update was face detection only,

@@ -122,6 +122,7 @@ function RecordRTC(mediaStream, config) {
 
             if (blob && !config.disableLogs) {
                 console.debug(blob.type, '->', bytesToSize(blob.size));
+                document.getElementById("save-to-disk").innerHTML = 'Save';
             }
 
             if (!config.autoWriteToDisk) {
