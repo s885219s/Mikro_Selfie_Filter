@@ -6,8 +6,8 @@ html, body {
 }
 #faceCanvas {
     position: absolute;
-    background-color: black;
-    //background-image: url("../media/images/mikro1.jpg");
+    //background-color: black;
+    background-image: url("../media/images/mikro.jpg");
     //background: rgb(233, 233, 233);
     background-size: 100%;
     font-size: 2em;

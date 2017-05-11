@@ -18,7 +18,9 @@ document.addEventListener('keydown', function(event) {
     else if(event.keyCode == 13 && document.getElementById('start').disabled) {
         document.getElementById('stop').disabled = true;
         document.getElementById('start').disabled = false;
-        recorder.stopRecording();
+        setTimeout(function() {
+            recorder.stopRecording();
+        }, 700);
     }
     else if(event.keyCode == 83){
         document.getElementById('save-to-disk').disabled = true;
@@ -39,7 +41,9 @@ document.getElementById('start').onclick = function() {
 document.getElementById('stop').onclick = function() {
     this.disabled = true;
     document.getElementById('start').disabled = false;
-    recorder.stopRecording();
+    setTimeout(function() {
+        recorder.stopRecording();
+    }, 500);
 //			recorder.stopRecording(function(url) {
 //				var video = document.createElement('video');
 //				video.src = url;
